@@ -14,7 +14,6 @@ const courseRoutes = require('./routes/courseRoutes');
 const reviewRoutes = require('./routes/reviewRoutes'); 
 
 // --- Load Environment Variables ---
-// Ensure your .env file is in the root directory
 dotenv.config();
 
 // --- Connect to Database ---

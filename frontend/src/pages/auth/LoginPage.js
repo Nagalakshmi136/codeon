@@ -26,8 +26,8 @@ const LoginPage = () => {
         if (isAuthenticated && user) {
             console.log("User already authenticated on mount/update, redirecting...");
             const targetPath = user.role === 'admin' ? '/admin/dashboard'
-                            : user.role === 'teacher' ? '/teacher/dashboard'
-                            : '/student/dashboard';
+                : user.role === 'teacher' ? '/teacher/dashboard'
+                    : '/student/dashboard';
             navigate(targetPath, { replace: true });
         }
     }, [isAuthenticated, user, navigate]);
@@ -62,42 +62,28 @@ const LoginPage = () => {
                 const intendedPath = location.state?.from?.pathname;
                 let targetPath = intendedPath || (
                     loggedInUser.role === 'admin' ? '/admin/dashboard' :
-                    loggedInUser.role === 'teacher' ? '/teacher/dashboard' :
-                    '/student/dashboard'
+                        loggedInUser.role === 'teacher' ? '/teacher/dashboard' :
+                            '/student/dashboard'
                 );
                 console.log(`Navigating to: ${targetPath}`);
                 navigate(targetPath, { replace: true });
-                // Note: setIsSubmitting is NOT set to false here
 
             } else {
-                // FAILURE PATH (API returned success: false)
                 console.log('Login API call failed:', result.message);
                 setError(result.message || 'Login Failed. Please check credentials.');
-                // We will reset isSubmitting in the finally block
             }
         } catch (error) {
-            // UNEXPECTED ERROR PATH (Network error, etc.)
             loginAttemptFinished = true; // Mark that the async call completed (with error)
             console.error("Unexpected login error in onSubmit:", error);
             if (isMounted.current) { // Check mount status before setting state
-                 setError('An unexpected error occurred during login. Check console.');
+                setError('An unexpected error occurred during login. Check console.');
             }
-             // We will reset isSubmitting in the finally block
+            // We will reset isSubmitting in the finally block
         } finally {
-            // This block runs after try/catch, regardless of success/failure of the promise inside try
             // Check if the component is still mounted AND the login attempt finished (didn't exit early)
             if (isMounted.current && loginAttemptFinished) {
-                 // Find out if navigation is about to happen or just happened
-                 // This is tricky, as navigate() is async in terms of effect
-                 // A simpler approach for finally: always reset if NO navigation occurred.
-                 // We know navigation only happens if result.success was true.
-                 // Let's refine: reset only if setError was called OR an unexpected error happened.
-
-                 // A robust way: Check if error state IS set OR if catch block was hit.
-                 // But simpler: just reset the button if still mounted AFTER the attempt.
-                 // The navigation should unmount the component anyway if successful.
-                 console.log("Running finally block in onSubmit. Resetting isSubmitting.");
-                 setIsSubmitting(false); // Reset submitting state OFF reliably
+                console.log("Running finally block in onSubmit. Resetting isSubmitting.");
+                setIsSubmitting(false); // Reset submitting state OFF reliably
             } else if (!isMounted.current) {
                 console.log("onSubmit finally block: Component already unmounted.");
             }
@@ -109,9 +95,9 @@ const LoginPage = () => {
             <h2>Login</h2>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={onSubmit}>
-                 <div>
+                <div>
                     <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" name="email" value={email} onChange={onChange} required disabled={isSubmitting}/>
+                    <input type="email" id="email" name="email" value={email} onChange={onChange} required disabled={isSubmitting} />
                 </div>
                 <div>
                     <label htmlFor="password">Password:</label>

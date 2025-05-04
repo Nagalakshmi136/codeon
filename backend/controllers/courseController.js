@@ -138,5 +138,4 @@ module.exports = {
     getCourseById,
     joinCourse,
     getApprovedCourseReviews,
-    // ...existing exports...
 };

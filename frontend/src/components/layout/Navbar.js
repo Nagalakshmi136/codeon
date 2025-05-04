@@ -14,7 +14,7 @@ const Navbar = () => {
     // Don't render navbar content until loading is complete
     if (loading) {
         return (
-             <nav style={navStyle}>
+            <nav style={navStyle}>
                 <div style={containerStyle}>
                     <Link to="/" style={linkStyle}>LMS</Link>
                     <span>Loading...</span>
@@ -31,9 +31,9 @@ const Navbar = () => {
             {user?.role === 'teacher' && <Link to="/teacher/dashboard" style={linkStyle}>Teacher Dash</Link>}
             {user?.role === 'student' && <Link to="/student/dashboard" style={linkStyle}>Student Dash</Link>}
 
-             {/* Common Links for logged-in users */}
-             {(user?.role === 'student' || user?.role === 'teacher') && <Link to="/courses" style={linkStyle}>Courses</Link>}
-             <Link to="/profile" style={linkStyle}>Profile</Link>
+            {/* Common Links for logged-in users */}
+            {(user?.role === 'student' || user?.role === 'teacher') && <Link to="/courses" style={linkStyle}>Courses</Link>}
+            <Link to="/profile" style={linkStyle}>Profile</Link>
 
             <button onClick={handleLogout} style={buttonStyle}>
                 Logout
@@ -52,7 +52,7 @@ const Navbar = () => {
     return (
         <nav style={navStyle}>
             <div style={containerStyle}>
-                <Link to="/" style={{...linkStyle, fontSize: '1.5rem'}}>LMS</Link>
+                <Link to="/" style={{ ...linkStyle, fontSize: '1.5rem' }}>LMS</Link>
                 <div>{isAuthenticated ? authLinks : guestLinks}</div>
             </div>
         </nav>
@@ -63,11 +63,11 @@ const navStyle = {
     background: '#333',
     color: '#fff',
     padding: '0.7rem',
-    position: 'fixed', 
+    position: 'fixed',
     top: 0,
     left: 0,
     width: '100%',
-    zIndex: 1000, 
+    zIndex: 1000,
 };
 
 const containerStyle = {

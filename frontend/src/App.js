@@ -84,7 +84,6 @@ function App() {
       <Router>
         <Navbar />
         <div className="container" style={{ paddingTop: '70px', paddingBottom: '20px' }}>
-          {/* Render AppContent which checks loading state */}
           <AppContent />
         </div>
       </Router>

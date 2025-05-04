@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [loading, setLoading] = useState(true);
 
-    // useEffect to load user on initial render or token change (Keep this)
+    // useEffect to load user on initial render or token change
     useEffect(() => {
         const loadUser = async () => {
             // Use the current 'token' state variable here
