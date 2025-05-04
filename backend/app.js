@@ -1,8 +1,6 @@
-// server.js
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const path = require('path'); // Often useful, though not strictly required by previous steps
 
 // --- Local Imports ---
 const connectDB = require('./config/dbConnect');
@@ -11,9 +9,9 @@ const { errorHandler } = require('./middleware/errorMiddleware');
 // --- Import Route Files ---
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
-const adminRoutes = require('./routes/adminRoutes');   // <-- Added
-const courseRoutes = require('./routes/courseRoutes'); // <-- Added
-const reviewRoutes = require('./routes/reviewRoutes'); // <-- Added
+const adminRoutes = require('./routes/adminRoutes');   
+const courseRoutes = require('./routes/courseRoutes'); 
+const reviewRoutes = require('./routes/reviewRoutes'); 
 
 // --- Load Environment Variables ---
 // Ensure your .env file is in the root directory
@@ -27,16 +25,13 @@ const app = express();
 
 // --- Core Middleware ---
 // Enable Cross-Origin Resource Sharing
-app.use(cors()); // Consider configuring specific origins for production
+app.use(cors());
 
 // Enable Express to parse JSON request bodies
 app.use(express.json());
 
-// Optional: Middleware to parse URL-encoded data (if using forms)
-// app.use(express.urlencoded({ extended: false }));
-
 // --- Basic Test/API Status Route ---
-app.get('/api', (req, res) => { // Changed path slightly to /api
+app.get('/api', (req, res) => {
   res.json({ message: 'LMS API is running...' });
 });
 
@@ -65,7 +60,7 @@ const server = app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
 });
 
-// --- Handle Unhandled Promise Rejections (Good Practice) ---
+// --- Handle Unhandled Promise Rejections ---
 process.on('unhandledRejection', (err, promise) => {
   console.error(`Unhandled Rejection Error: ${err.message}`);
   // Close server & exit process gracefully
@@ -75,7 +70,7 @@ process.on('unhandledRejection', (err, promise) => {
   });
 });
 
-// --- Handle SIGTERM for graceful shutdown (e.g., for Docker/Heroku) ---
+// --- Handle SIGTERM for graceful shutdown ---
 process.on('SIGTERM', () => {
     console.log('SIGTERM signal received: closing HTTP server');
     server.close(() => {

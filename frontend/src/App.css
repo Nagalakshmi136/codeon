@@ -2,7 +2,7 @@
 body {
   font-family: sans-serif;
   margin: 0;
-  padding-top: 60px; /* Ensure content doesn't hide under fixed navbar */
+  padding-top: 60px; 
 }
 
 .container {

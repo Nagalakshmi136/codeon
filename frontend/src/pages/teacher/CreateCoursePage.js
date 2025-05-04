@@ -23,7 +23,6 @@ const CreateCoursePage = () => {
             console.error(err);
              setSubmitting(false);
         }
-        // No finally block needed if navigating away on success
     };
 
     return (

@@ -16,9 +16,9 @@ const ReviewForm = ({ courseId, onReviewSubmitted }) => {
         setSubmitting(true);
         try {
             await api.post(`/api/courses/${courseId}/reviews`, { comment });
-            setComment(''); // Clear form
+            setComment(''); 
             alert('Review submitted for approval!');
-            onReviewSubmitted(); // Callback to potentially refresh reviews list
+            onReviewSubmitted(); 
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to submit review.');
             console.error(err);

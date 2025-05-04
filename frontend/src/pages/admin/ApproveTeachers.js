@@ -6,7 +6,7 @@ const ApproveTeachers = () => {
     const [pendingTeachers, setPendingTeachers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [actionError, setActionError] = useState(''); // Error for specific actions
+    const [actionError, setActionError] = useState(''); 
 
     const fetchPendingTeachers = useCallback(async () => {
         setLoading(true);
@@ -20,32 +20,28 @@ const ApproveTeachers = () => {
         } finally {
             setLoading(false);
         }
-    }, []); // useCallback avoids re-creating function unnecessarily
+    }, []);
 
     useEffect(() => {
         fetchPendingTeachers();
-    }, [fetchPendingTeachers]); // Run on mount and if function identity changes (it won't here)
+    }, [fetchPendingTeachers]); 
 
     const handleApproval = async (id, action) => {
         setActionError('');
         const originalTeachers = [...pendingTeachers]; // Store original state
-        // Optimistic UI update: Remove the teacher immediately
         setPendingTeachers(currentTeachers => currentTeachers.filter(t => t._id !== id));
 
         try {
             if (action === 'approve') {
                 await api.put(`/api/admin/teachers/${id}/approve`);
-                 // Optionally show a success message
             } else if (action === 'reject') {
                 await api.put(`/api/admin/teachers/${id}/reject`);
-                 // Optionally show a success message
             }
-             // No need to refetch if optimistic update is enough
-             // fetchPendingTeachers(); // Or refetch to be absolutely sure
+            
         } catch (err) {
             setActionError(`Failed to ${action} teacher ${id}.`);
             console.error(err);
-            setPendingTeachers(originalTeachers); // Revert UI on error
+            setPendingTeachers(originalTeachers);
         }
     };
 

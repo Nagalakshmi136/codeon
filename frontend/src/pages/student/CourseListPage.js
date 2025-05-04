@@ -16,7 +16,7 @@ const CourseListPage = () => {
             setLoading(true);
             setError('');
             try {
-                const res = await api.get('/api/courses'); // Gets approved courses
+                const res = await api.get('/api/courses'); 
                 setCourses(res.data);
             } catch (err) {
                 setError('Failed to load courses.');
@@ -33,8 +33,7 @@ const CourseListPage = () => {
         setJoinSuccess('');
         try {
             await api.put(`/api/courses/${courseId}/join`);
-            setJoinSuccess(`Successfully joined course ${courseId}!`); // Provide feedback
-            // Maybe disable the button or visually indicate joining
+            setJoinSuccess(`Successfully joined course ${courseId}!`); 
         } catch (err) {
             setJoinError(err.response?.data?.message || `Failed to join course ${courseId}.`);
             console.error(err);
@@ -60,7 +59,6 @@ const CourseListPage = () => {
                            <p>Teacher: {course.teacher?.name || 'N/A'}</p>
                            <p>{course.description}</p>
                            <Link to={`/courses/${course._id}`} style={{marginRight: '10px'}}>View Details</Link>
-                           {/* Only show Join button for students? Assume ProtectedRoute handles role */}
                            <button onClick={() => handleJoin(course._id)}>Join Course</button>
                         </div>
                     ))}

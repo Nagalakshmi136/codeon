@@ -1,13 +1,12 @@
-// src/pages/admin/ApproveCourses.js
 import React, { useState, useEffect, useCallback } from 'react';
-import api from '../../services/api'; // Assuming your api service is set up
-import { LoadingSpinner } from '../../components/common/LoadingSpinner'; // Assuming you have this
+import api from '../../services/api'; 
+import { LoadingSpinner } from '../../components/common/LoadingSpinner'; 
 
 const ApproveCourses = () => {
     const [pendingCourses, setPendingCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [actionError, setActionError] = useState(''); // Error for specific actions
+    const [actionError, setActionError] = useState(''); 
 
     const fetchPendingCourses = useCallback(async () => {
         setLoading(true);
@@ -22,28 +21,24 @@ const ApproveCourses = () => {
         } finally {
             setLoading(false);
         }
-    }, []); // useCallback to memoize the function
+    }, []); 
 
     useEffect(() => {
         fetchPendingCourses();
-    }, [fetchPendingCourses]); // Fetch on component mount
+    }, [fetchPendingCourses]); 
 
     const handleApproval = async (id, action) => {
         setActionError('');
         // Store original state for potential rollback on error
         const originalCourses = [...pendingCourses];
-        // Optimistic UI update: Remove the course from the list immediately
         setPendingCourses(currentCourses => currentCourses.filter(c => c._id !== id));
 
         try {
             const endpoint = `/api/admin/courses/${id}/${action}`; // action is 'approve' or 'reject'
             await api.put(endpoint);
-            // Optionally show a success message or notification here
-            // No need to refetch if the optimistic update is sufficient
         } catch (err) {
             setActionError(`Failed to ${action} course ${id}. Please try again.`);
             console.error(`Course ${action} Error:`, err.response?.data || err.message);
-            // Rollback UI update on error
             setPendingCourses(originalCourses);
         }
     };

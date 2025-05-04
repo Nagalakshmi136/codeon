@@ -1,4 +1,3 @@
-// routes/adminRoutes.js
 const express = require('express');
 const router = express.Router();
 const {
@@ -12,9 +11,9 @@ const {
     getPendingReviews,
     approveReview,
     rejectReview,
-} = require('../controllers/adminController'); // Adjust path
+} = require('../controllers/adminController'); 
 
-const { protect, isAdmin } = require('../middleware/authMiddleware'); // Adjust path
+const { protect, isAdmin } = require('../middleware/authMiddleware'); 
 
 // Apply protect and isAdmin middleware to ALL routes in this file
 router.use(protect);

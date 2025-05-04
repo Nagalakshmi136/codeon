@@ -1,19 +1,17 @@
-// Example seed.js (run once with `node seed.js`)
 require('dotenv').config();
-const User = require('./models/User'); // Adjust path
-const connectDB = require('./config/dbConnect'); // Adjust path
+const User = require('./models/User'); 
+const connectDB = require('./config/dbConnect'); 
 
 connectDB();
 
 const seedAdmin = async () => {
     try {
-        await User.deleteMany({ email: 'admin@example.com' }); // Clear existing admin
+        await User.deleteMany({ email: 'admin@example.com' });
 
         const adminUser = new User({
             name: 'Admin User',
             email: 'admin@example.com',
-            password: 'adminpassword', // Store hashed password
-            role: 'admin',
+            password: 'adminpassword', 
             status: 'approved'
         });
 

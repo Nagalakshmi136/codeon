@@ -27,7 +27,7 @@ const MyReviewsPage = () => {
      if (loading) return <LoadingSpinner />;
     if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
-     const getStatusStyle = (status) => { // Same as in MyCourses
+     const getStatusStyle = (status) => { 
         switch (status) {
             case 'approved': return { color: 'green', fontWeight: 'bold' };
             case 'pending': return { color: 'orange', fontWeight: 'bold' };

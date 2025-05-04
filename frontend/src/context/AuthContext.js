@@ -1,6 +1,6 @@
 // src/context/AuthContext.js
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import api from '../services/api'; // Make sure api is imported correctly
+import api from '../services/api';
 
 const AuthContext = createContext();
 
@@ -25,46 +25,38 @@ export const AuthProvider = ({ children }) => {
                     // Clear invalid token and state if /me fails
                     localStorage.removeItem('token');
                     setToken(null);
-                    setUser(null); // Make sure user is cleared
+                    setUser(null);
                     delete api.defaults.headers.common['Authorization'];
                 }
             }
             setLoading(false);
         };
         loadUser();
-        // Dependency array should likely just be empty [] if you only want
-        // this to run once on mount, or include token if you want it
-        // to re-run if the token state variable changes externally.
-        // Let's keep it simple for now, assuming token is set by login/logout:
-    }, []); // Run once on mount
+    }, []);
 
-
-    // Login User (ensure it returns user data as discussed previously)
+    // Login User returns user data
     const login = async (email, password) => {
         try {
             const res = await api.post('/api/auth/login', { email, password });
             console.log(res);
             localStorage.setItem('token', res.data.token);
-            setToken(res.data.token); // Update state
-            api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`; // Set header
-            setUser(res.data); // Update user state
-            return { success: true, user: res.data }; // Return user data
+            setToken(res.data.token);
+            api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+            setUser(res.data);
+            return { success: true, user: res.data };
         } catch (err) {
-            console.error('Login failed in AuthContext:', err.response ? err.response.data : err.message); // Log the specific error
+            console.error('Login failed in AuthContext:', err.response ? err.response.data : err.message);
 
-            // --- CRITICAL CLEANUP ON FAILURE ---
-            localStorage.removeItem('token'); // Remove any potentially stale token
-            setToken(null);                   // Clear token state
-            setUser(null);                    // Clear user state
-            delete api.defaults.headers.common['Authorization']; // Clear API header
-            // --- END CRITICAL CLEANUP ---
-
+            localStorage.removeItem('token');
+            setToken(null);
+            setUser(null);
+            delete api.defaults.headers.common['Authorization'];
             // Return failure status and message
             return { success: false, message: err.response?.data?.message || 'Login failed' };
         }
     };
 
-    // Register Student (Keep as is, ensuring it sets state correctly)
+    // Register Student 
     const registerStudent = async (name, email, password) => {
         try {
             const res = await api.post('/api/auth/register/student', { name, email, password });
@@ -80,7 +72,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Register Teacher (Keep as is)
+    // Register Teacher 
     const registerTeacher = async (name, email, password) => {
         try {
             const res = await api.post('/api/auth/register/teacher', { name, email, password });
@@ -92,9 +84,8 @@ export const AuthProvider = ({ children }) => {
     };
 
 
-    // ----- CORRECT LOGOUT FUNCTION -----
     const logout = () => {
-        console.log('Logging out...'); // Add log for debugging
+        console.log('Logging out...');
         // 1. Remove token from local storage
         localStorage.removeItem('token');
         // 2. Clear token state
@@ -103,23 +94,20 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         // 4. Remove the Authorization header from future Axios requests
         delete api.defaults.headers.common['Authorization'];
-        // 5. Optional: Add any other cleanup logic if needed
     };
-    // ----- END CORRECT LOGOUT FUNCTION -----
 
 
     return (
-        // Make sure 'logout' is included in the value passed to consumers
         <AuthContext.Provider value={{
             user,
             token,
             loading,
-            isAuthenticated: !!user, // Derived state: true if user object exists
+            isAuthenticated: !!user, 
             login,
             registerStudent,
             registerTeacher,
-            logout, // EXPOSE THE LOGOUT FUNCTION
-            setUser // Expose setUser if needed for profile updates etc.
+            logout,
+            setUser
         }}>
             {children}
         </AuthContext.Provider>

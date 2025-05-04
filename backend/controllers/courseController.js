@@ -21,7 +21,7 @@ const createCourse = asyncHandler(async (req, res) => {
         res.status(400);
         throw new Error('Please provide title and description for the course');
     }
-    
+
     // Create the course linked to the current teacher
     const course = await Course.create({
         title,
@@ -58,9 +58,9 @@ const getApprovedCourses = asyncHandler(async (req, res) => {
     // Fetch courses that have been approved, including basic teacher info,
     // and exclude the enrolled students list for brevity
     const courses = await Course.find({ status: 'approved' })
-                                .populate('teacher', 'name')
-                                .select('-students')
-                                .sort({ createdAt: -1 });
+        .populate('teacher', 'name')
+        .select('-students')
+        .sort({ createdAt: -1 });
     res.json(courses);
 });
 
@@ -70,7 +70,7 @@ const getApprovedCourses = asyncHandler(async (req, res) => {
 const getCourseById = asyncHandler(async (req, res) => {
     // Find and return course details with additional teacher info
     const course = await Course.findOne({ _id: req.params.id, status: 'approved' })
-                               .populate('teacher', 'name email');
+        .populate('teacher', 'name email');
     if (course) {
         res.json(course);
     } else {
@@ -122,9 +122,9 @@ const getApprovedCourseReviews = asyncHandler(async (req, res) => {
 
     // Retrieve and return reviews with the student's name populated
     const reviews = await Review.find({
-            course: req.params.courseId,
-            status: 'approved'
-        })
+        course: req.params.courseId,
+        status: 'approved'
+    })
         .populate('student', 'name')
         .sort({ createdAt: -1 });
 

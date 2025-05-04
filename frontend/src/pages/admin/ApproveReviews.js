@@ -1,14 +1,13 @@
-// src/pages/admin/ApproveReviews.js
 import React, { useState, useEffect, useCallback } from 'react';
-import api from '../../services/api'; // Assuming your api service is set up
-import { LoadingSpinner } from '../../components/common/LoadingSpinner'; // Assuming you have this
-import { Link } from 'react-router-dom'; // To link to course page
+import api from '../../services/api'; 
+import { LoadingSpinner } from '../../components/common/LoadingSpinner'; 
+import { Link } from 'react-router-dom'; 
 
 const ApproveReviews = () => {
     const [pendingReviews, setPendingReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [actionError, setActionError] = useState(''); // Error for specific actions
+    const [actionError, setActionError] = useState(''); 
 
     const fetchPendingReviews = useCallback(async () => {
         setLoading(true);
@@ -23,27 +22,23 @@ const ApproveReviews = () => {
         } finally {
             setLoading(false);
         }
-    }, []); // useCallback to memoize the function
+    }, []); 
 
     useEffect(() => {
         fetchPendingReviews();
-    }, [fetchPendingReviews]); // Fetch on component mount
+    }, [fetchPendingReviews]); 
 
     const handleApproval = async (id, action) => {
         setActionError('');
-        // Store original state for potential rollback on error
         const originalReviews = [...pendingReviews];
-        // Optimistic UI update: Remove the review from the list immediately
         setPendingReviews(currentReviews => currentReviews.filter(r => r._id !== id));
 
         try {
             const endpoint = `/api/admin/reviews/${id}/${action}`; // action is 'approve' or 'reject'
             await api.put(endpoint);
-            // Optionally show a success message or notification here
         } catch (err) {
             setActionError(`Failed to ${action} review ${id}. Please try again.`);
             console.error(`Review ${action} Error:`, err.response?.data || err.message);
-            // Rollback UI update on error
             setPendingReviews(originalReviews);
         }
     };

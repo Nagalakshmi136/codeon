@@ -1,4 +1,3 @@
-// routes/authRoutes.js
 const express = require('express');
 const router = express.Router();
 const {
@@ -6,8 +5,8 @@ const {
   registerTeacher,
   loginUser,
   getMe,
-} = require('../controllers/authController'); // Adjust path
-const { protect } = require('../middleware/authMiddleware'); // Adjust path
+} = require('../controllers/authController'); 
+const { protect } = require('../middleware/authMiddleware'); 
 
 router.post('/register/student', registerStudent);
 router.post('/register/teacher', registerTeacher);

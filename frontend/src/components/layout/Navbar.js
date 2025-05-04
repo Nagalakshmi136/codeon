@@ -1,4 +1,3 @@
-// src/components/layout/Navbar.js
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -60,16 +59,15 @@ const Navbar = () => {
     );
 };
 
-// Basic inline styles (replace with CSS classes later)
 const navStyle = {
     background: '#333',
     color: '#fff',
     padding: '0.7rem',
-    position: 'fixed', // Make it fixed
+    position: 'fixed', 
     top: 0,
     left: 0,
     width: '100%',
-    zIndex: 1000, // Ensure it's on top
+    zIndex: 1000, 
 };
 
 const containerStyle = {

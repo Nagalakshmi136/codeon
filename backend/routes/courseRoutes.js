@@ -1,4 +1,3 @@
-// routes/courseRoutes.js
 const express = require('express');
 const router = express.Router();
 const {
@@ -9,19 +8,18 @@ const {
     getApprovedCourses,
     getCourseById,
     joinCourse,
-    getApprovedCourseReviews, // Handler for reviews of a course
-} = require('../controllers/courseController'); // Adjust path
+    getApprovedCourseReviews, 
+} = require('../controllers/courseController'); 
 
 // Import review controller for the nested POST route
-const { createReview } = require('../controllers/reviewController'); // Adjust path
+const { createReview } = require('../controllers/reviewController'); 
 
-const { protect, isTeacher, isApprovedTeacher, isStudent } = require('../middleware/authMiddleware'); // Adjust path
+const { protect, isTeacher, isApprovedTeacher, isStudent } = require('../middleware/authMiddleware'); 
 
 // --- Course Routes ---
 
 // GET all approved courses (public for logged-in users)
-router.get('/', protect, getApprovedCourses); // Renamed from '/approved' for simplicity
-
+router.get('/', protect, getApprovedCourses); 
 // POST create new course (Teacher only)
 router.post('/', protect, isTeacher, isApprovedTeacher, createCourse);
 

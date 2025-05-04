@@ -49,7 +49,6 @@ const MyCoursesPage = () => {
                     {courses.map(course => (
                         <li key={course._id} style={{ borderBottom: '1px solid #ccc', padding: '10px 0' }}>
                            <strong>{course.title}</strong> - Status: <span style={getStatusStyle(course.status)}>{course.status}</span>
-                           {/* Optionally add Edit/View links if needed */}
                         </li>
                     ))}
                 </ul>

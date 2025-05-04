@@ -1,76 +1,73 @@
-// This file handles review operations including creating a new review for a course
-// and retrieving reviews submitted by the logged-in student.
+/**
+ * @file   Student review endpoints
+ */
 
 const asyncHandler = require('express-async-handler');
-const Review = require('../models/Review');
-const Course = require('../models/Course');
+const Review      = require('../models/Review');
+const Course      = require('../models/Course');
 
-// @desc    Create a new review for a course
-// @route   POST /api/courses/:courseId/reviews
-// @access  Private/Student
+/**
+ * @desc   Submit a new course review (pending approval)
+ * @route  POST /api/courses/:courseId/reviews
+ * @access Private (student)
+ */
 const createReview = asyncHandler(async (req, res) => {
-    // Extract the comment from the request body; rating can be added later if needed
     const { comment } = req.body;
     const { courseId } = req.params;
 
-    // Validate that a review comment is provided
+    // ensure comment provided
     if (!comment) {
         res.status(400);
-        throw new Error('Review comment cannot be empty');
+        throw new Error('Review comment is required');
     }
 
-    // 1. Confirm that the course exists and is approved for review
+    // verify course exists and is approved
     const course = await Course.findById(courseId);
     if (!course || course.status !== 'approved') {
         res.status(404);
-        throw new Error('Course not found or not available for review');
+        throw new Error('Course not available for review');
     }
 
-    // 2. Check that the student is enrolled in the course
-    const isEnrolled = course.students.some(studentId => studentId.equals(req.user._id));
-    if (!isEnrolled) {
-        res.status(403); // Forbidden: not eligible to review
-        throw new Error('You must be enrolled in the course to write a review');
+    // ensure user is enrolled
+    if (!course.students.some(id => id.equals(req.user._id))) {
+        res.status(403);
+        throw new Error('Enrollment required to review');
     }
 
-    // 3. Optionally ensure that the student has not already submitted a review for this course
-    const existingReview = await Review.findOne({ course: courseId, student: req.user._id });
-    if (existingReview) {
+    // prevent duplicate review
+    if (await Review.findOne({ course: courseId, student: req.user._id })) {
         res.status(400);
-        throw new Error('You have already reviewed this course');
+        throw new Error('Review already submitted');
     }
 
-    // 4. Create the review with an initial 'pending' status
+    // create review
     const review = await Review.create({
         comment,
-        // rating, // Uncomment if ratings are implemented
         student: req.user._id,
         course: courseId,
         status: 'pending',
     });
 
     if (review) {
-        res.status(201).json({ message: 'Review submitted successfully. Waiting for approval.', review });
+        res.status(201).json({ message: 'Review submitted—awaiting approval.', review });
     } else {
         res.status(400);
         throw new Error('Failed to submit review');
     }
 });
 
-// @desc    Get reviews submitted by the logged-in student
-// @route   GET /api/reviews/my
-// @access  Private/Student
+/**
+ * @desc   Retrieve reviews by the logged‑in student
+ * @route  GET /api/reviews/my
+ * @access Private (student)
+ */
 const getMyReviews = asyncHandler(async (req, res) => {
-    // Retrieve reviews where the current user is the author
     const reviews = await Review.find({ student: req.user._id })
-                                .populate('course', 'title') // Populate course title for context
-                                .select('comment status createdAt course')
-                                .sort({ createdAt: -1 });
+        .populate('course', 'title')
+        .select('comment status createdAt course')
+        .sort({ createdAt: -1 });
 
     res.json(reviews);
 });
 
-module.exports = {
-    createReview,
-    getMyReviews,
-};
+module.exports = { createReview, getMyReviews };

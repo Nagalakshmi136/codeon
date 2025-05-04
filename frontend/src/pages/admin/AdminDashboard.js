@@ -35,7 +35,6 @@ const AdminDashboard = () => {
                 <div>
                     <p>Total Approved Students: {stats.totalStudents}</p>
                     <p>Total Approved Teachers: {stats.totalTeachers}</p>
-                    {/* Add more stats if included in backend */}
                 </div>
             ) : (
                 <p>No stats available.</p>

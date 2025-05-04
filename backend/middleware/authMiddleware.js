@@ -1,91 +1,75 @@
-// middleware/authMiddleware.js
+/**
+ * @file Authentication & role-based authorization middleware
+ */
+
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
-const User = require('../models/User'); // Adjust path if necessary
-const dotenv = require('dotenv');
+const User = require('../models/User');
+require('dotenv').config();
 
-dotenv.config();
-
+/**
+ * Verify JWT and attach user to req.user
+ */
 const protect = asyncHandler(async (req, res, next) => {
-  let token;
-
-  // Check for token in Authorization header (Bearer token)
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    try {
-      // Get token from header (remove 'Bearer ' prefix)
-      token = req.headers.authorization.split(' ')[1];
-
-      // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-      // Get user from the token payload (id) and attach to request
-      // Exclude the password field
-      req.user = await User.findById(decoded.id).select('-password');
-
-      if (!req.user) {
-         res.status(401);
-         throw new Error('Not authorized, user not found');
-      }
-
-      next(); // Proceed to the next middleware or route handler
-    } catch (error) {
-      console.error('Token verification failed:', error.message);
-      res.status(401); // Unauthorized
-      throw new Error('Not authorized, token failed');
-    }
-  }
-
-  if (!token) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader?.startsWith('Bearer ')) {
     res.status(401);
-    throw new Error('Not authorized, no token provided');
+    throw new Error('No token provided');
   }
+
+  const token = authHeader.split(' ')[1];
+  let payload;
+  try {
+    payload = jwt.verify(token, process.env.JWT_SECRET);
+  } catch {
+    res.status(401);
+    throw new Error('Token verification failed');
+  }
+
+  const user = await User.findById(payload.id).select('-password');
+  if (!user) {
+    res.status(401);
+    throw new Error('User not found');
+  }
+
+  req.user = user;
+  next();
 });
 
-// --- Role-Based Access Middleware ---
-
+/** Allow only admin users */
 const isAdmin = (req, res, next) => {
-  if (req.user && req.user.role === 'admin') {
-    next();
-  } else {
-    res.status(403); // Forbidden
-    throw new Error('Not authorized as an admin');
+  if (req.user.role !== 'admin') {
+    res.status(403);
+    throw new Error('Admin access required');
   }
+  next();
 };
 
+/** Allow only teacher users */
 const isTeacher = (req, res, next) => {
-  // Check if user is authenticated and is a teacher
-  // IMPORTANT: Also check if their status is 'approved' for actions requiring it
-  // We might apply this check more specifically in controllers/routes where needed,
-  // but having the basic role check here is useful.
-  if (req.user && req.user.role === 'teacher') {
-    next();
-  } else {
-    res.status(403); // Forbidden
-    throw new Error('Not authorized as a teacher');
+  if (req.user.role !== 'teacher') {
+    res.status(403);
+    throw new Error('Teacher access required');
   }
+  next();
 };
 
-// Optional: Middleware to check if teacher is approved (use after protect & isTeacher)
+/** Ensure teacher account is approved */
 const isApprovedTeacher = (req, res, next) => {
-    if (req.user && req.user.role === 'teacher' && req.user.status === 'approved') {
-        next();
-    } else {
-        res.status(403);
-        throw new Error('Teacher account not approved');
-    }
-}
-
-const isStudent = (req, res, next) => {
-  if (req.user && req.user.role === 'student') {
-    next();
-  } else {
-    res.status(403); // Forbidden
-    throw new Error('Not authorized as a student');
+  if (req.user.role !== 'teacher' || req.user.status !== 'approved') {
+    res.status(403);
+    throw new Error('Teacher not approved');
   }
+  next();
 };
 
+/** Allow only student users */
+const isStudent = (req, res, next) => {
+  if (req.user.role !== 'student') {
+    res.status(403);
+    throw new Error('Student access required');
+  }
+  next();
+};
 
 module.exports = { protect, isAdmin, isTeacher, isApprovedTeacher, isStudent };

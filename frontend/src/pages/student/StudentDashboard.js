@@ -11,7 +11,6 @@ const StudentDashboard = () => {
              <ul>
                  <li><Link to="/courses">Browse Approved Courses</Link></li>
                  <li><Link to="/my-reviews">My Reviews</Link></li>
-                 {/* Add link to "My Enrolled Courses" if you add that feature */}
                  <li><Link to="/profile">Edit Profile</Link></li>
              </ul>
         </div>

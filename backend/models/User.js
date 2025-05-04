@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
         enum: ['admin', 'teacher', 'student'],
         required: true,
     },
-    status: { // Primarily for teachers
+    status: { 
         type: String,
         enum: ['pending', 'approved', 'rejected'],
         default: function() { return this.role === 'teacher' ? 'pending' : 'approved'; }

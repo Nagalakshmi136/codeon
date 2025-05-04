@@ -7,6 +7,4 @@ const { protect, isStudent } = require('../middleware/authMiddleware'); // Adjus
 // GET reviews submitted by the logged-in student (Student only)
 router.get('/my', protect, isStudent, getMyReviews);
 
-// Note: Routes for Admin approving/rejecting reviews are in adminRoutes.js
-
 module.exports = router;
