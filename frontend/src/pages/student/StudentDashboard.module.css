@@ -1,0 +1,57 @@
+.dashboardContainer {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 30px 40px;
+    background-color: #e0e5ec;
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #ffffff;
+    text-align: center;
+}
+
+.title {
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.welcomeMessage {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 40px;
+}
+
+.actionsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.actionButton {
+    display: block;
+    width: 70%;
+    max-width: 350px;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #e0e5ec;
+    color: #3498db;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.actionButton:hover {
+    color: #2980b9;
+    box-shadow: 4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff;
+}
+
+.actionButton:active {
+    color: #2980b9;
+    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+}

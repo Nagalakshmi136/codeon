@@ -1,0 +1,122 @@
+.createContainer {
+    max-width: 700px;
+    /* Consistent width for forms */
+    margin: 2rem auto;
+    padding: 30px 40px;
+    background-color: #e0e5ec;
+    /* Base background */
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px #a3b1c6,
+        -10px -10px 20px #ffffff;
+}
+
+.title {
+    text-align: center;
+    color: #555;
+    margin-bottom: 35px;
+    font-weight: 600;
+}
+
+.formGroup {
+    margin-bottom: 25px;
+    /* Spacing between form fields */
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+    text-align: left;
+    /* Align labels left */
+}
+
+.inputField,
+.textAreaField {
+    width: 100%;
+    padding: 12px 15px;
+    /* Input padding */
+    border: none;
+    /* Remove default border */
+    border-radius: 8px;
+    /* Rounded corners for inputs */
+    background-color: #e0e5ec;
+    /* Match background */
+    font-size: 1rem;
+    color: #333;
+    box-sizing: border-box;
+    /* Neumorphic inset shadow for inputs */
+    box-shadow: inset 5px 5px 10px #a3b1c6,
+        inset -5px -5px 10px #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.textAreaField {
+    min-height: 120px;
+    /* Good height for description */
+    resize: vertical;
+}
+
+.inputField:focus,
+.textAreaField:focus {
+    outline: none;
+    /* Remove default focus outline */
+    box-shadow: inset 7px 7px 14px #a3b1c6,
+        inset -7px -7px 14px #ffffff;
+}
+
+/* Button styling */
+.submitButton {
+    display: block;
+    width: 50%;
+    margin: 30px auto 0 auto;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #e0e5ec;
+    color: #2ecc71;
+    /* Greenish color */
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 6px 6px 12px #a3b1c6,
+        -6px -6px 12px #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.submitButton:hover:not(:disabled) {
+    color: #27ae60;
+    /* Darker green */
+    box-shadow: 4px 4px 8px #a3b1c6,
+        -4px -4px 8px #ffffff;
+}
+
+.submitButton:active:not(:disabled) {
+    color: #27ae60;
+    box-shadow: inset 5px 5px 10px #a3b1c6,
+        inset -5px -5px 10px #ffffff;
+}
+
+.submitButton:disabled {
+    color: #95a5a6;
+    /* Disabled text color */
+    cursor: not-allowed;
+    box-shadow: inset 3px 3px 6px #a3b1c6,
+        inset -3px -3px 6px #ffffff;
+}
+
+/* Error Message Styling */
+.message {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.error {
+    color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
+}

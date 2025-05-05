@@ -1,0 +1,120 @@
+.registerContainer {
+    max-width: 480px;
+    margin: 3rem auto;
+    padding: 40px 50px;
+    background-color: #e0e5ec;
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px #a3b1c6,
+        -10px -10px 20px #ffffff;
+}
+
+.title {
+    text-align: center;
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 35px;
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+    text-align: left;
+}
+
+.inputField {
+    width: 100%;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 8px;
+    background-color: #e0e5ec;
+    font-size: 1rem;
+    color: #333;
+    box-sizing: border-box;
+    box-shadow: inset 5px 5px 10px #a3b1c6,
+        inset -5px -5px 10px #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.inputField:focus {
+    outline: none;
+    box-shadow: inset 7px 7px 14px #a3b1c6,
+        inset -7px -7px 14px #ffffff;
+}
+
+.submitButton {
+    display: block;
+    width: 100%;
+    margin: 30px auto 0 auto;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #e0e5ec;
+    color: #2ecc71;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 6px 6px 12px #a3b1c6,
+        -6px -6px 12px #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.submitButton:hover:not(:disabled) {
+    color: #27ae60;
+    box-shadow: 4px 4px 8px #a3b1c6,
+        -4px -4px 8px #ffffff;
+}
+
+.submitButton:active:not(:disabled) {
+    color: #27ae60;
+    box-shadow: inset 5px 5px 10px #a3b1c6,
+        inset -5px -5px 10px #ffffff;
+}
+
+.submitButton:disabled {
+    color: #95a5a6;
+    cursor: not-allowed;
+    box-shadow: inset 3px 3px 6px #a3b1c6,
+        inset -3px -3px 6px #ffffff;
+}
+
+.message {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.error {
+    color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
+}
+
+.altLink {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.altLink a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 5px;
+}
+
+.altLink a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}

@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../../services/api';
 import { LoadingSpinner } from '../../components/common/LoadingSpinner';
+import styles from './ApproveTeachers.module.css';
 
 const ApproveTeachers = () => {
     const [pendingTeachers, setPendingTeachers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [actionError, setActionError] = useState(''); 
+    const [actionError, setActionError] = useState('');
 
     const fetchPendingTeachers = useCallback(async () => {
         setLoading(true);
@@ -24,20 +25,15 @@ const ApproveTeachers = () => {
 
     useEffect(() => {
         fetchPendingTeachers();
-    }, [fetchPendingTeachers]); 
+    }, [fetchPendingTeachers]);
 
     const handleApproval = async (id, action) => {
         setActionError('');
-        const originalTeachers = [...pendingTeachers]; // Store original state
+        const originalTeachers = [...pendingTeachers];
         setPendingTeachers(currentTeachers => currentTeachers.filter(t => t._id !== id));
-
         try {
-            if (action === 'approve') {
-                await api.put(`/api/admin/teachers/${id}/approve`);
-            } else if (action === 'reject') {
-                await api.put(`/api/admin/teachers/${id}/reject`);
-            }
-            
+            const endpoint = `/api/admin/teachers/${id}/${action}`;
+            await api.put(endpoint);
         } catch (err) {
             setActionError(`Failed to ${action} teacher ${id}.`);
             console.error(err);
@@ -45,23 +41,36 @@ const ApproveTeachers = () => {
         }
     };
 
-    if (loading) return <LoadingSpinner />;
-    if (error) return <p style={{ color: 'red' }}>{error}</p>;
+    if (loading) return <div className={styles.centered}><LoadingSpinner /></div>;
+    if (error) return <div className={`${styles.centered} ${styles.errorText}`}><p>{error}</p></div>;
 
     return (
-        <div>
-            <h2>Approve Teacher Registrations</h2>
-            {actionError && <p style={{ color: 'red' }}>{actionError}</p>}
+        <div className={styles.approveContainer}>
+            <h2 className={styles.title}>Approve Teacher Registrations</h2>
+            {actionError && <p className={styles.errorText}>{actionError}</p>}
             {pendingTeachers.length === 0 ? (
                 <p>No pending teacher registrations.</p>
             ) : (
-                <ul>
+                <ul className={styles.teacherList}>
                     {pendingTeachers.map(teacher => (
-                        <li key={teacher._id} style={{ borderBottom: '1px solid #ccc', padding: '10px 0', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-                            <span>{teacher.name} ({teacher.email}) - Registered: {new Date(teacher.createdAt).toLocaleDateString()}</span>
-                            <div>
-                                <button onClick={() => handleApproval(teacher._id, 'approve')} style={{background:'green', color:'white', marginRight:'5px'}}>Approve</button>
-                                <button onClick={() => handleApproval(teacher._id, 'reject')} style={{background:'red', color:'white'}}>Reject</button>
+                        <li key={teacher._id} className={styles.teacherCard}>
+                            <div className={styles.teacherDetails}>
+                                <span><strong>{teacher.name}</strong> ({teacher.email})</span>
+                                <small>Registered: {new Date(teacher.createdAt).toLocaleDateString()}</small>
+                            </div>
+                            <div className={styles.actionButtons}>
+                                <button
+                                    onClick={() => handleApproval(teacher._id, 'approve')}
+                                    className={`${styles.actionButton} ${styles.approveBtn}`}
+                                >
+                                    Approve
+                                </button>
+                                <button
+                                    onClick={() => handleApproval(teacher._id, 'reject')}
+                                    className={`${styles.actionButton} ${styles.rejectBtn}`}
+                                >
+                                    Reject
+                                </button>
                             </div>
                         </li>
                     ))}

@@ -1,9 +1,7 @@
-// src/pages/auth/LoginPage.js
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-
+import styles from './LoginPage.module.css';
 const LoginPage = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
@@ -15,13 +13,12 @@ const LoginPage = () => {
     const isMounted = useRef(true);
 
     useEffect(() => {
-        isMounted.current = true; // Set to true on mount
+        isMounted.current = true;
         return () => {
-            isMounted.current = false; // Set to false on unmount
+            isMounted.current = false;
         };
     }, []);
 
-    // Effect for redirecting already authenticated users (keep as is)
     useEffect(() => {
         if (isAuthenticated && user) {
             console.log("User already authenticated on mount/update, redirecting...");
@@ -40,23 +37,21 @@ const LoginPage = () => {
         setError('');
         if (isSubmitting) return;
 
-        setIsSubmitting(true); // Set submitting ON
-
-        let loginAttemptFinished = false; // Flag to control finally block logic
+        setIsSubmitting(true);
+        let loginAttemptFinished = false;
+        let loginSuccess = false;
 
         try {
             const result = await login(email, password);
-            loginAttemptFinished = true; // Mark that the async call completed
+            loginAttemptFinished = true;
 
-            // --- Check Mount Status AFTER await ---
             if (!isMounted.current) {
                 console.log("LoginPage unmounted during login attempt.");
-                return; // Exit if component unmounted
+                return;
             }
-            // --- End Check Mount Status ---
 
             if (result.success && result.user) {
-                // SUCCESS PATH: Navigation will happen, no need to reset isSubmitting here.
+                loginSuccess = true;
                 const loggedInUser = result.user;
                 console.log('Login API call successful, navigating based on role:', loggedInUser.role);
                 const intendedPath = location.state?.from?.pathname;
@@ -73,17 +68,17 @@ const LoginPage = () => {
                 setError(result.message || 'Login Failed. Please check credentials.');
             }
         } catch (error) {
-            loginAttemptFinished = true; // Mark that the async call completed (with error)
+            loginAttemptFinished = true;
             console.error("Unexpected login error in onSubmit:", error);
-            if (isMounted.current) { // Check mount status before setting state
-                setError('An unexpected error occurred during login. Check console.');
+            if (isMounted.current) {
+                setError('An unexpected error occurred. Please try again.');
             }
-            // We will reset isSubmitting in the finally block
         } finally {
-            // Check if the component is still mounted AND the login attempt finished (didn't exit early)
-            if (isMounted.current && loginAttemptFinished) {
-                console.log("Running finally block in onSubmit. Resetting isSubmitting.");
-                setIsSubmitting(false); // Reset submitting state OFF reliably
+            // Reset submitting state ONLY if the attempt finished,
+            // the component is still mounted, AND login was NOT successful
+            if (isMounted.current && loginAttemptFinished && !loginSuccess) {
+                console.log("Running finally block in onSubmit. Resetting isSubmitting due to failure/error.");
+                setIsSubmitting(false);
             } else if (!isMounted.current) {
                 console.log("onSubmit finally block: Component already unmounted.");
             }
@@ -91,23 +86,52 @@ const LoginPage = () => {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={onSubmit}>
-                <div>
+        // Apply container style
+        <div className={styles.loginContainer}>
+            {/* Apply title style */}
+            <h2 className={styles.title}>Login</h2>
+            {/* Apply message and error styles */}
+            {error && <p className={`${styles.message} ${styles.error}`}>{error}</p>}
+            {/* Apply form style */}
+            <form onSubmit={onSubmit} className={styles.loginForm}>
+                {/* Apply form group style */}
+                <div className={styles.formGroup}>
                     <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" name="email" value={email} onChange={onChange} required disabled={isSubmitting} />
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={email}
+                        onChange={onChange}
+                        required
+                        className={styles.inputField}
+                        disabled={isSubmitting}
+                    />
                 </div>
-                <div>
+                {/* Apply form group style */}
+                <div className={styles.formGroup}>
                     <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" value={password} onChange={onChange} required disabled={isSubmitting} />
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={password}
+                        onChange={onChange}
+                        required
+                        className={styles.inputField}
+                        disabled={isSubmitting}
+                    />
                 </div>
-                <button type="submit" disabled={isSubmitting}>
+                <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={styles.submitButton}
+                >
                     {isSubmitting ? 'Logging in...' : 'Login'}
                 </button>
             </form>
-            <p>
+            {/* Apply link container style */}
+            <p className={styles.registerLink}>
                 Don't have an account? <Link to="/register/student">Register as Student</Link> | <Link to="/register/teacher">Register as Teacher</Link>
             </p>
         </div>

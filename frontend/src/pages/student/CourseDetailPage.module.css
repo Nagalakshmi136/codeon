@@ -1,0 +1,203 @@
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    text-align: center;
+}
+
+.errorText {
+    color: #e74c3c;
+    font-weight: 500;
+}
+
+.detailContainer {
+    max-width: 850px;
+    margin: 2rem auto;
+    padding: 20px;
+    /* Base padding */
+}
+
+/* Course Info Card */
+.courseInfoCard {
+    background-color: #e0e5ec;
+    border-radius: 20px;
+    padding: 30px 40px;
+    margin-bottom: 40px;
+    box-shadow: 10px 10px 20px #a3b1c6,
+        -10px -10px 20px #ffffff;
+}
+
+.courseTitle {
+    text-align: center;
+    color: #34495e;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.teacherInfo {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.teacherInfo strong {
+    color: #444;
+}
+
+.description {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 0;
+    /* Remove bottom margin if last element */
+}
+
+/* Reviews Section */
+.reviewsSection {
+    background-color: #e0e5ec;
+    border-radius: 20px;
+    padding: 30px 40px;
+    margin-bottom: 40px;
+    box-shadow: 10px 10px 20px #a3b1c6,
+        -10px -10px 20px #ffffff;
+}
+
+.reviewsTitle {
+    text-align: center;
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.noReviews {
+    text-align: center;
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+.reviewList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.reviewItem {
+    border-bottom: 1px solid rgba(163, 177, 198, 0.3);
+    /* Subtle separator */
+    padding: 18px 0;
+    margin-bottom: 10px;
+}
+
+.reviewItem:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.reviewComment {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.reviewAuthor {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+}
+
+/* Review Form */
+.reviewFormContainer {
+    background-color: #e0e5ec;
+    border-radius: 20px;
+    padding: 30px 40px;
+    box-shadow: 10px 10px 20px #a3b1c6,
+        -10px -10px 20px #ffffff;
+}
+
+
+.formTitle {
+    text-align: center;
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.textAreaField {
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #e0e5ec;
+    font-size: 1rem;
+    color: #333;
+    box-sizing: border-box;
+    box-shadow: inset 5px 5px 10px #a3b1c6,
+        inset -5px -5px 10px #ffffff;
+    transition: all 0.2s ease-in-out;
+    min-height: 100px;
+    /* Good height for textarea */
+    margin-bottom: 20px;
+    /* Space below textarea */
+    resize: vertical;
+    /* Allow vertical resizing */
+}
+
+.textAreaField:focus {
+    outline: none;
+    box-shadow: inset 7px 7px 14px #a3b1c6,
+        inset -7px -7px 14px #ffffff;
+}
+
+.submitButton {
+    display: block;
+    width: auto;
+    /* Fit content or set width */
+    padding: 12px 30px;
+    /* Good padding for main action */
+    margin: 0 auto;
+    /* Center button */
+    border: none;
+    border-radius: 10px;
+    background-color: #e0e5ec;
+    color: #3498db;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 6px 6px 12px #a3b1c6,
+        -6px -6px 12px #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.submitButton:hover:not(:disabled) {
+    color: #2980b9;
+    box-shadow: 4px 4px 8px #a3b1c6,
+        -4px -4px 8px #ffffff;
+}
+
+.submitButton:active:not(:disabled) {
+    color: #2980b9;
+    box-shadow: inset 5px 5px 10px #a3b1c6,
+        inset -5px -5px 10px #ffffff;
+}
+
+.submitButton:disabled {
+    color: #95a5a6;
+    cursor: not-allowed;
+    box-shadow: inset 3px 3px 6px #a3b1c6,
+        inset -3px -3px 6px #ffffff;
+}
+
+.enrollMessage {
+    text-align: center;
+    margin-top: 30px;
+    font-style: italic;
+    color: #7f8c8d;
+}

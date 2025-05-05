@@ -1,0 +1,143 @@
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    text-align: center;
+}
+
+/* Main container for the profile form */
+.profileContainer {
+    max-width: 600px;
+    /* Adjust width as needed */
+    margin: 2rem auto;
+    padding: 30px 40px;
+    background-color: #e0e5ec;
+    /* Base background */
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px #a3b1c6,
+        -10px -10px 20px #ffffff;
+}
+
+.title {
+    text-align: center;
+    color: #555;
+    margin-bottom: 35px;
+    font-weight: 600;
+}
+
+.formGroup {
+    margin-bottom: 25px;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+    text-align: left;
+    /* Align labels left */
+}
+
+.inputField,
+.inputFieldDisabled {
+    width: 100%;
+    padding: 12px 15px;
+    /* Input padding */
+    border: none;
+    /* Remove default border */
+    border-radius: 8px;
+    /* Rounded corners for inputs */
+    background-color: #e0e5ec;
+    /* Match background */
+    font-size: 1rem;
+    color: #333;
+    box-sizing: border-box;
+    /* Neumorphic inset shadow for inputs */
+    box-shadow: inset 5px 5px 10px #a3b1c6,
+        inset -5px -5px 10px #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.inputField:focus {
+    outline: none;
+    /* Remove default focus outline */
+    /* Optional: Subtle change on focus */
+    box-shadow: inset 7px 7px 14px #a3b1c6,
+        inset -7px -7px 14px #ffffff;
+}
+
+.inputFieldDisabled {
+    color: #7f8c8d;
+    /* Dimmer text for disabled */
+    cursor: not-allowed;
+    box-shadow: inset 3px 3px 6px #a3b1c6,
+        /* Less pronounced shadow */
+        inset -3px -3px 6px #ffffff;
+}
+
+/* Button styling */
+.submitButton {
+    display: block;
+    /* Make button block level */
+    width: 50%;
+    /* Example width */
+    margin: 30px auto 0 auto;
+    /* Center button and add top margin */
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #e0e5ec;
+    color: #3498db;
+    /* Button text color */
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 6px 6px 12px #a3b1c6,
+        -6px -6px 12px #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.submitButton:hover:not(:disabled) {
+    color: #2980b9;
+    box-shadow: 4px 4px 8px #a3b1c6,
+        -4px -4px 8px #ffffff;
+}
+
+.submitButton:active:not(:disabled) {
+    color: #2980b9;
+    box-shadow: inset 5px 5px 10px #a3b1c6,
+        inset -5px -5px 10px #ffffff;
+}
+
+.submitButton:disabled {
+    color: #95a5a6;
+    /* Disabled text color */
+    cursor: not-allowed;
+    box-shadow: inset 3px 3px 6px #a3b1c6,
+        /* Less pronounced shadow */
+        inset -3px -3px 6px #ffffff;
+}
+
+/* Success/Error Messages */
+.message {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.success {
+    color: #27ae60;
+    background-color: rgba(46, 204, 113, 0.1);
+    /* Light green background */
+}
+
+.error {
+    color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
+    /* Light red background */
+}

@@ -1,0 +1,164 @@
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    text-align: center;
+}
+
+.coursesContainer {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 20px 30px;
+}
+
+.title {
+    text-align: center;
+    color: #555;
+    margin-bottom: 35px;
+    font-weight: 600;
+}
+
+/* Message styling */
+.message {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.error {
+    color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
+}
+
+.noCoursesContainer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 30px;
+    background-color: #e0e5ec;
+    border-radius: 15px;
+    box-shadow: inset 6px 6px 12px #a3b1c6,
+        inset -6px -6px 12px #ffffff;
+}
+
+.noCourses {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.createButton {
+    display: inline-block;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    background-color: #e0e5ec;
+    color: #2ecc71;
+    /* Greenish color for create action */
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 6px 6px 12px #a3b1c6,
+        -6px -6px 12px #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.createButton:hover {
+    color: #27ae60;
+    box-shadow: 4px 4px 8px #a3b1c6,
+        -4px -4px 8px #ffffff;
+}
+
+.createButton:active {
+    color: #27ae60;
+    box-shadow: inset 5px 5px 10px #a3b1c6,
+        inset -5px -5px 10px #ffffff;
+}
+
+
+.courseList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.courseCard {
+    background-color: #e0e5ec;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 9px 9px 18px #a3b1c6,
+        -9px -9px 18px #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Vertically center info and status */
+    gap: 20px;
+}
+
+.courseInfo {
+    flex-grow: 1;
+    /* Allow info to take up space */
+}
+
+.courseTitle {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #34495e;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.description {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.submittedDate {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+}
+
+.statusSection {
+    flex-shrink: 0;
+    /* Prevent status from shrinking */
+    text-align: right;
+}
+
+.statusBadge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 15px;
+    /* Pill shape */
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    min-width: 80px;
+    /* Ensure consistent width */
+    text-align: center;
+}
+
+/* Reusing status colors from MyReviewsPage.module.css */
+.statusPending {
+    background-color: rgba(243, 156, 18, 0.15);
+    color: #f39c12;
+    box-shadow: inset 1px 1px 2px #d68910, inset -1px -1px 2px #fff1dd;
+}
+
+.statusApproved {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #27ae60;
+    box-shadow: inset 1px 1px 2px #1e8449, inset -1px -1px 2px #eafaf1;
+}
+
+.statusRejected {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: #c0392b;
+    box-shadow: inset 1px 1px 2px #a93226, inset -1px -1px 2px #fdedec;
+}
